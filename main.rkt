@@ -2,13 +2,13 @@
 
 (provide dlm-read)
 (require (planet neil/csv:1:=7) net/url)
- 
+
 (define (make-reader [delimiter #\tab])
   (make-csv-reader-maker
    `((separator-chars              ,delimiter)
      (strip-leading-whitespace?  . #t)
      (strip-trailing-whitespace? . #t))))
- 
+
 (define (all-rows [port (current-input-port)] [delimiter #\tab])
   (define read-row ((make-reader delimiter) port))
   (apply map list
@@ -17,6 +17,6 @@
 
 (define (dlm-read [file (current-input-port)] [delimiter #\tab])
   (if (port? file)
-      (all-rows file)
+      (all-rows file delimiter)
       (with-input-from-file file
-        (lambda () (all-rows)))))
+        (lambda () (all-rows (current-input-port) delimiter)))))
