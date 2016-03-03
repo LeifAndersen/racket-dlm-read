@@ -1,7 +1,7 @@
 #lang racket/base
 
 (provide dlm-read)
-(require (planet neil/csv:1:=7) net/url)
+(require csv-reading net/url)
 
 (define (make-reader [delimiter #\tab])
   (make-csv-reader-maker
